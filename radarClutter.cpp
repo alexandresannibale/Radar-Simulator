@@ -1,8 +1,8 @@
 #include <iostream>
 #include <cmath>
-#include "radarPropagation.cpp"
+#include "radarClass.cpp"
 using namespace std;
-//Distance from radr to the target
+//Distance from radar to the target
 class point{
 public:
     double p[3];
