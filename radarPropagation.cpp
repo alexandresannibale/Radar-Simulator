@@ -9,12 +9,12 @@
 #define _MHz *1e6
 
 using namespace std;
-
+// Generates Sine wave of radar propagation
 void sineGenerator(vector<double> *v, double A ,double f,double t, double phi, double dt)
 {
     int n= int(t/dt);
     v->clear();
-    v->reserve(n);
+    v->reserve(n); 
 
     for (int i=0; i < n; i++)
     {
