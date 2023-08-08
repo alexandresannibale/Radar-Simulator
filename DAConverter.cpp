@@ -5,14 +5,14 @@
 using namespace std;
 
 
-class DAC_Converter
+class DAConverter
 {
 public:
 double maxV;
 double minV;
 double scaler;
 public:
-    DAC_Converter(double max, double min, int numBits)
+    DAConverter(double max, double min, int numBits)
     {
         maxV = max;
         minV = min;
@@ -25,7 +25,7 @@ public:
         return conversion;       
     }
 
-    vector<double> converterVector(vector<double> &TxChirp)
+    vector<double> convertVector(vector<double> &TxChirp)
     {
        vector<double> convertedAnalogVector;
        int n = TxChirp.size();
@@ -46,23 +46,3 @@ public:
         return convertedAnalogVector;
     }
 };
-
-void vectorPrint(vector<double> &vp)
-{
-
-    for (int i=0; i < vp.size(); i++)
-    {
-    cout << i << " " << vp.at(i) << endl;  
-    }
-}
-
-int bill()
-{
-    vector<double> v{1,2,300};
-    DAC_Converter Signal1(10.0, -10.0, 8);
-    //cout << Signal1.converter(5.3); 
-    vector <double> b = Signal1.converterVector(v);
-    vectorPrint(b);
-    cout << endl << Signal1.scaler;
-    return 0;
-}

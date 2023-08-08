@@ -9,6 +9,7 @@
 #include "VPConverter.cpp"
 #include "radarPropagation.cpp"
 #include "PVConverter.cpp"
+#include "ADConverter.cpp"
 
 int main(){
     //noise vector    vector<double> Tx;
@@ -20,31 +21,30 @@ int main(){
     vector<double> Rx;
     //return signal after convolution
     vector<double> convRx;
-    //Tx chirp signal
-    vector<double> TxChirp;
     //zeros vector
     vector<double> zeroV;
     //return signal with no noise
     vector<double> RxKaleen;
 
+    DAConverter DAC(10.0, -10.0, 8);
+
+    ADConverter ADC(10.0,-10.0, 8);
+
+    radar_Propagation propagator;
 
     double dt = 0.001 _us;
 
-    TxChirp = chirpGenerator(1, 20 _MHz, 500 _MHz, 5 _us, 0, dt);
+    vector<double> TxChirp = chirpGenerator(1, 20 _MHz, 500 _MHz, 5 _us, 0, dt);
 
-    DAC_Converter DAC1(10.0, -10.0, 8);
+    vector <double> Vchirp = DAC.convertVector(TxChirp);
 
-    vector <double> chirpVoltageSignal = DAC1.converterVector(TxChirp);
+    vector <double> Pchirp = gainVPConverter(Vchirp, 50, 100);
 
-    vector <double> chirpPowerSignal = gainVPConverter(chirpVoltageSignal, 50, 100);
-
-    radar_Propagation propagator1;
-
-    vector<double> RxPower = propagator1.caculatePowerReceived(chirpPowerSignal);
+    vector<double> PRx = propagator.caculatePowerReceived(Pchirp);
     
-    vector<double> voltageSignal = gainPVConverter(RxPower,50,100);
+    vector<double> VRx = gainPVConverter(PRx,50,100);
 
-    
+    vector<int> VADCout = ADC.convertVector(VRx);
 
     noise = randomNoiseGenerator(60 _us, dt, 0, 1);
     
