@@ -11,7 +11,13 @@ vector<double> gainPVConverter(vector<double> &RxChirp,  double resistance, doub
     PVSignalVector.reserve(n);
     for (int i=0; i < n; i++)
     {
-        PVSignalVector.push_back(sqrt((RxChirp.at(i))*resistance));
+        PVSignalVector.push_back(sqrt((RxChirp.at(i))*Gt*resistance));
     }
     return PVSignalVector;
+}
+
+
+double gainPVConverter(double PRx,  double resistance, double Gt)
+{
+    return sqrt(PRx*Gt*resistance);
 }

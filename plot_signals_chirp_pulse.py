@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import seaborn
 seaborn.set(style="darkgrid")
 
-Tx = np.loadtxt("Tx.txt")
+Tx = np.loadtxt("TxChirp.txt")
 Rx = np.loadtxt("Rx.txt")
 RxClean = np.loadtxt("RxKaleen.txt")
 conv = np.loadtxt("convolutionSignal.txt")

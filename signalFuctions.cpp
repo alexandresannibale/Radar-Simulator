@@ -104,6 +104,25 @@ vector<double> signalAdd(vector<double> &v1, vector<double> &v2, double t0, doub
     return vC;
 }
 
+vector<double> doubleConverter(vector<int> &v)
+{
+    vector<double> Dv;
+    int n = v.size();
+    Dv.reserve(n);
+    for (int i=0; i < n; i++)
+        Dv.push_back(double(v.at(i)));
+    return Dv;
+}
+
+vector<int> intConverter(vector<double> &v, double scalingFactor)
+{
+    vector<int> Iv;
+    int n = v.size();
+    Iv.reserve(n);
+    for (int i=0; i < n; i++)
+        Iv.push_back(int(round(v.at(i)* scalingFactor)));
+    return Iv;
+}
 vector<double> convolution(vector<double> &v, vector<double> &r)
 {
     vector<double> c;
@@ -124,7 +143,28 @@ vector<double> convolution(vector<double> &v, vector<double> &r)
     
 }
 
-void vectorPrinter(vector<double> &vp, double dt)
+double findMaxValue(vector<double> &v)
+{
+    
+    double mV = v.at(0);   
+    for (int i=1; i < v.size()  ; i++)
+    {
+        if (mV < v.at(i))
+            mV = v.at(i);
+    }
+    return mV;
+    
+}
+
+void vectorPrinterDouble(vector<double> &vp, double dt)
+{
+    for (int i=0; i < vp.size(); i++)
+    {
+    cout << i * dt << " " << vp.at(i) << endl;  
+    }
+}
+
+void vectorPrinterInt(vector<int> &vp, double dt)
 {
     for (int i=0; i < vp.size(); i++)
     {
@@ -133,6 +173,16 @@ void vectorPrinter(vector<double> &vp, double dt)
 }
 
 void saveVector(vector<double> &vp, double dt, string data_path)
+{
+    ofstream fw(data_path, ofstream::out);
+    for (int i=0; i < vp.size(); i++)
+    {
+        fw << i * dt << " " << vp.at(i) << endl;  
+    }
+    fw.close();
+}
+
+void saveVectorInt(vector<int> &vp, double dt, string data_path)
 {
     ofstream fw(data_path, ofstream::out);
     for (int i=0; i < vp.size(); i++)

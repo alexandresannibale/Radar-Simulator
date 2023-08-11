@@ -16,16 +16,16 @@ public:
     {
         maxV = max;
         minV = min;
-        scaler = (pow(2,numBits+1)-1)/max;
+        scaler = (pow(2,numBits)-1)/max; //most significant bit used for the sign
     }
     
-    double converter(double digital)
+    double converter(int digital)
     {
         double conversion = digital/scaler;
         return conversion;       
     }
 
-    vector<double> convertVector(vector<double> &TxChirp)
+    vector<double> convertVector(vector<int> &TxChirp)
     {
        vector<double> convertedAnalogVector;
        int n = TxChirp.size();
@@ -33,14 +33,14 @@ public:
        
        for (int i = 0; i < n; i++)     
         {   
-            double digital = TxChirp.at(i);
+            int digital = TxChirp.at(i)/scaler;
             if (digital > maxV)
                 digital = maxV;
 
             else if (digital < minV)
                 digital = minV;
 
-           convertedAnalogVector.push_back(digital/scaler);
+           convertedAnalogVector.push_back(digital);
           
         }       
         return convertedAnalogVector;

@@ -17,7 +17,7 @@ void vectorPrint(vector<double> &vp)
 }
 int main()
 {
-    vector<double> v{1,2,300};
+    vector<int> v{127,128,255,-255,0,256,-256};
     DAConverter Signal1(10.0, -10.0, 8);
     //cout << Signal1.converter(5.3); 
     vector <double> b = Signal1.convertVector(v);

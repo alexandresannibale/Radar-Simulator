@@ -4,14 +4,14 @@
 #include <iterator>
 using namespace std;
 
-vector<double> gainVPConverter(vector<double> &TxChirp,  double resistance, double Gt)
+vector<double> gainVPConverter(vector<double> &v,  double resistance, double Gt)
 {
     vector<double> VPSignalVector;
-    int n = TxChirp.size();
+    int n = v.size();
     VPSignalVector.reserve(n);
+    
     for (int i=0; i < n; i++)
-    {
-        VPSignalVector.push_back((pow(TxChirp.at(i),2)/resistance));
-    }
+        VPSignalVector.push_back(v.at(i)*v.at(i)/resistance*Gt);
+
     return VPSignalVector;
 }
