@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
-
 #define _us *1e-6
 #define _MHz *1e6
 
@@ -20,13 +19,18 @@ private:
     
     double L = 1; //General loss factor to account for both system and propagation loss
     
-    double Rt= 10320; //Range from transmiter to the target
+    double Rt= 1000; //Range from transmiter to the target
     
-    double Rr=10320; //Range from the target to receiver
+    double Rr=1000; //Range from the target to receiver
     
     double k=1.380658e-23; //Boltzman Constant
     
     double sigma = 1; //target area cross section
+
+    double c = 2.998e+8; //speed of light in meters per second
+
+    double Rmax = 20000; //radar maxiumum range for testing
+
 
 public:
 
@@ -94,6 +98,13 @@ public:
         return k;
     }
 
+    void setRmax(double Rmax_){
+        Rmax = Rmax_;
+    }
+    double getRmax(){
+        return Rmax;
+    }
+
 // class constructor
     radar_Propagation(double P_, double Gt_, double Gr_, double phi_,double sigma_, double L_, double Rt_,double Rr_)
     {
@@ -106,19 +117,18 @@ public:
         Rt = Rt_;
         Rr = Rr_;
     }
-    radar_Propagation()
-    {
-        
-    }
 
+    radar_Propagation(){}
+
+    
 //fuctions 
     double caculatePowerReceived(double Pin)
     {
     // Returns power in Watt units       
-        double Prx = (Pin*Gt*Gr*phi*phi*sigma)/((4*M_PI)*(4*M_PI)*(4*M_PI)*Rt*Rt*Rr*Rr*L);
+        double PRx = (Pin*Gt*Gr*phi*phi*sigma)/((4*M_PI)*(4*M_PI)*(4*M_PI)*Rt*Rt*Rr*Rr*L);
     //    cout << Prx << "W" << endl;
     //    cout << endl;
-        return Prx;
+        return PRx;
     }
 
     vector<double> caculatePowerReceived(vector<double> &signal)

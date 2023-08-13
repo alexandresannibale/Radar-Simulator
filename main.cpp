@@ -4,7 +4,7 @@
 #include <vector>
 #include <random>
 #include <string>
-#include "signalFuctions.cpp"
+#include "signalFunctions.cpp"
 #include "DAConverter.cpp"
 #include "VPConverter.cpp"
 #include "radarPropagation.cpp"
@@ -18,8 +18,6 @@ int main(){
     vector<double> noise;
     //pulse signal reversed
     vector<double> reverse;    
-    //return signal
-    vector<double> Rx;
     //return signal after convolution
     vector<double> convRx;
     //zeros vector
@@ -56,39 +54,41 @@ int main(){
 
     vector <double> Pchirp = gainVPConverter(Vchirp, 50, 100);
 
-    
-
     double PTx = findMaxValue(Pchirp);
-    cout << PTx << endl;
+  
+    cout << "PTx: "<< PTx << endl;
 
     double PRx = propagator.caculatePowerReceived(PTx);
 
-    cout << PRx << endl;
+    cout << "PRx: " << PRx << endl;
 
 
-    double VRx = gainPVConverter(PRx,50,Gt);
+    double V0Rx = gainPVConverter(PRx,50,Gt);
 
-    cout << VRx << endl;
+    vector<double> VRxChirp = chirpGenerator(V0Rx, 20 _MHz, 500 _MHz, 5 _us, 0, dt);
+
+    VRxChirp = signalReverse(VRxChirp);
     
-    vector<double> RxChirp = chirpGenerator(VRx, 20 _MHz, 500 _MHz, 5 _us, 0, dt);
+ //   vector<double> VRx = RxVector(VRxChirp,0,0, propagator.getRmax() ,dt); 
 
-    RxChirp = signalReverse(RxChirp);
-    
-    vector<double> Vout = LNA1.amplifyVector(RxChirp);
 
-    Vout = LNA2.amplifyVector(Vout);
+    vector<double> VRx =RxVector(VRxChirp,propagator.getRt(), propagator.getRr(), propagator.getRmax() ,dt); 
 
-    vector<int> VADCRx = ADC.convertVector(Vout);
+    vector<double> VRxA = LNA1.amplifyVector(VRx);
 
-    vector<double> VADDCRx = doubleConverter(VADCRx);
+    VRxA = LNA2.amplifyVector(VRxA);
+
+    vector<int> VRxC = ADC.convertVector(VRxA);
+
+    vector<double> Rx = doubleConverter(VRxC, 1/(pow(2,numBits)-1));
 
     reverse = signalReverse(TxChirp);
 
-    convRx = convolution(VADDCRx, reverse);
+    convRx = convolution(Rx, reverse);
 
     noise = randomNoiseGenerator(60 _us, dt, 0, 1);
 
-    Rx = signalAdd(noise, reverse, 20  _us, dt);
+    //RxT = signalAdd(noise, reverse, 20  _us, dt);
 
     noise = randomNoiseGenerator(60 _us, dt, 0, 1);
    
@@ -100,14 +100,15 @@ int main(){
     saveVectorInt(intTxChirp, dt, "intTxChirp.txt");
     saveVector(Vchirp, dt, "Vchirp.txt");
     saveVector(Pchirp, dt, "Pchirp.txt");
+    saveVector(VRxChirp, dt, "VRxChirp.txt");
 
 
-    saveVector(Vout, dt, "Vout.txt");
+    saveVector(VRxA, dt, "VRxA.txt");
 
-    saveVectorInt(VADCRx, dt, "VADCRx.txt");
+    saveVectorInt(VRxC, dt, "VRxC.txt");
 
-    saveVector(VADDCRx, dt, "VADDCRx.txt");
-    saveVector(RxChirp, dt, "RxChirp.txt");
+    saveVector(Rx, dt, "Rx.txt");
+    saveVector(VRx, dt, "VRx.txt");
 
     saveVector(reverse, dt, "reverse.txt");
     saveVector(Rx, dt, "Rx.txt");

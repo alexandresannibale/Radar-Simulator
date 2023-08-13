@@ -9,9 +9,8 @@ import matplotlib.pyplot as plt
 import seaborn
 seaborn.set(style="darkgrid")
 
-x = np.loadtxt("Vout.txt")
+x = np.loadtxt("convolutionSignal.txt")
 Rx = np.loadtxt("Rx.txt")
-y = np.loadtxt("VADDCRx.txt")
 reverse = np.loadtxt("reverse.txt")
 plt.close("all")
 plt.plot(x[:,0], x[:,1],"-o")

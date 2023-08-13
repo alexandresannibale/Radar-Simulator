@@ -8,6 +8,7 @@
 #define _us *1e-6
 #define _MHz *1e6
 
+
 using namespace std;
 // Generates Sine wave of radar propagation
 void sineGenerator(vector<double> *v, double A ,double f,double t, double phi, double dt)
@@ -80,11 +81,11 @@ vector<double> randomNoiseGenerator(double t, double dt, double mu, double sigma
 
 vector<double> signalAdd(vector<double> &v1, vector<double> &v2, double t0, double dt)
 {
-    vector<double> vC;
     int n = v1.size();
+    vector<double> vC;
     vC.clear();
     vC.reserve(n);
-
+    
     int b = int(t0/dt);
     int e = v2.size() + b;
      // cout << e << " "<< b << " " << n << endl;
@@ -93,7 +94,8 @@ vector<double> signalAdd(vector<double> &v1, vector<double> &v2, double t0, doub
         
         if ((i >= b) && (i < e))
         {
-         // cout << i-b<< " " << i << endl;
+          if ( i <100) 
+            cout << i-b<< " " << i << " " << v1.at(i)+v2.at(i-b) << endl;
             vC.push_back(v1.at(i)+v2.at(i-b));
         }
         else
@@ -103,14 +105,37 @@ vector<double> signalAdd(vector<double> &v1, vector<double> &v2, double t0, doub
     }
     return vC;
 }
+void vectorPrinterDouble(vector<double> &vp, double dt)
+{
+    for (int i=0; i < vp.size(); i++)
+    {
+    cout << i * dt << " " << vp.at(i) << endl;  
+    }
+}
 
-vector<double> doubleConverter(vector<int> &v)
+vector <double> RxVector(vector <double> signal, double Rt, double Rr,double Rmax,double dt)
+    {
+        double c = 2.998e+8; //speed of light in meters per second
+        //int b = int((((Rt + Rr)/c))/dt);
+        double t0 = (Rt + Rr)/c;
+        cout <<"t0: "<< t0 << endl;
+        int m = int(2*Rmax/c/dt);
+        cout <<"m: "<< m << endl;
+        vector <double> delay(m,0);
+        cout << "size: " << delay.size()<< endl;  
+
+   //     vectorPrinterDouble(delay,dt);
+        return signalAdd(delay, signal, t0, dt);
+    }
+
+
+vector<double> doubleConverter(vector<int> &v, double scalingFactor)
 {
     vector<double> Dv;
     int n = v.size();
     Dv.reserve(n);
     for (int i=0; i < n; i++)
-        Dv.push_back(double(v.at(i)));
+        Dv.push_back(double(v.at(i))*scalingFactor);
     return Dv;
 }
 
@@ -123,19 +148,20 @@ vector<int> intConverter(vector<double> &v, double scalingFactor)
         Iv.push_back(int(round(v.at(i)* scalingFactor)));
     return Iv;
 }
-vector<double> convolution(vector<double> &v, vector<double> &r)
+vector<double> convolution(vector<double> &original ,vector<double> &ret )
 {
     vector<double> c;
-    int I = v.size();
-    int K = r.size();
-
-    for (int i=0; i < I-K; i++)
+    int I = original.size();
+    int K = ret.size();
+    cout << I<<"   cvbfcb    " << K << endl;
+    for (int i=0; i <= I-K; i++)
     {
         double x = 0;
-
+    //    cout << "for loop 1" << endl;
         for(int k = 0; k < K; k++)
         {
-            x = x + r.at(k) * v.at(i + k);
+            x = x + ret.at(k) * original.at(i + k);
+      //      cout << "for loop 2" << endl;
         }
         c.push_back(x);
     }
@@ -156,13 +182,7 @@ double findMaxValue(vector<double> &v)
     
 }
 
-void vectorPrinterDouble(vector<double> &vp, double dt)
-{
-    for (int i=0; i < vp.size(); i++)
-    {
-    cout << i * dt << " " << vp.at(i) << endl;  
-    }
-}
+
 
 void vectorPrinterInt(vector<int> &vp, double dt)
 {
