@@ -62,20 +62,30 @@ vector<double> zerosGenerator(double t, double dt)
     return v;
 }
 
+vector<double> randomNoiseGenerator(int n, double mu, double sigma)
+{
+    default_random_engine generator;
+    normal_distribution<double> distribution(mu,sigma);
+    vector<double> v;
+    v.reserve(n);
 
-vector<double> randomNoiseGenerator(double t, double dt, double mu, double sigma)
+    for (int i=0; i < n; i++)
+        v.push_back(distribution(generator));
+    
+    return v;
+}
+
+vector<double> randomNoiseGeneratorOld(double t, double dt, double mu, double sigma)
 {
     default_random_engine generator;
     normal_distribution<double> distribution(mu,sigma);
     vector<double> v;
     int n = int(t/dt);
-    v.clear();
     v.reserve(n);
 
     for (int i=0; i < n; i++)
-    {
         v.push_back(distribution(generator));
-    }
+        
     return v;
 }
 

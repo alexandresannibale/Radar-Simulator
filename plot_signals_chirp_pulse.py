@@ -9,8 +9,8 @@ import matplotlib.pyplot as plt
 import seaborn
 seaborn.set(style="darkgrid")
 
-Tx = np.loadtxt("TxChirp.txt")
-Rx = np.loadtxt("Rx.txt")
+Tx = np.loadtxt("VRxChirp.txt")
+Rx = np.loadtxt("VRx.txt")
 RxClean = np.loadtxt("RxKaleen.txt")
 conv = np.loadtxt("convolutionSignal.txt")
 
@@ -27,8 +27,9 @@ ax[0,0].grid(True)
 
 ax[0,1].plot(Rx[:,0]/us, Rx[:,1])
 ax[0,1].plot(RxClean[:,0]/us, RxClean[:,1])
+ax[0,0].set_ylabel("Return Signal, Rx [$AU$]")
 ax[0,1].grid(True)
-ax[0,1].set_xlim(19.95, 20.40)
+ax[0,1].set_xlim(20.0, 20.5)
 
 ax[1,0].plot(conv[:,0]/us, conv[:,1])
 ax[1,0].grid(True)
@@ -37,11 +38,11 @@ ax[1,0].set_xlabel("elapsed time, [$\mu s$]")
 
 ax[1,1].plot(conv[:,0]/us, conv[:,1])
 ax[1,1].grid(True)
-#ax[1,1].set_ylabel("Matched Filter, [$AU$]")
-ax[1,1].set_xlim(19.80, 20.20)
+ax[1,1].set_ylabel("Matched Filter, [$AU$]")
+ax[1,1].set_xlim(6.55, 6.80)
 ax[1,1].set_xlabel("elapsed time, [$\mu s$]")
 
 fig.tight_layout()
 
 
-fig.savefig("plot_signals_chirp_pulse.png")
+fig.savefig("plot_signals_chirp_pulse_no_noise.png")

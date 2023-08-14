@@ -3,7 +3,7 @@
 #include <cmath>
 #include <iterator>
 #include "DAConverter.cpp"
-
+#include "signalFunctions.cpp"
 using namespace std;
 
 
@@ -18,8 +18,8 @@ void vectorPrint(vector<double> &vp)
 int main()
 {
     vector<int> v{127,128,255,-255,0,256,-256};
-    DAConverter Signal1(10.0, -10.0, 8);
-    //cout << Signal1.converter(5.3); 
+    DAConverter Signal1(10.0, -10.0, 8, 2);
+    cout << Signal1.converter(127) << endl; 
     vector <double> b = Signal1.convertVector(v);
     vectorPrint(b);
     cout << endl << Signal1.scaler;

@@ -27,7 +27,7 @@ int main(){
     //number of bit for scaling
     int numBits=8;
     double Gt = 1000;
-    DAConverter DAC(10.0, -10.0, numBits);
+    DAConverter DAC(10.0, -10.0, numBits, 0);
 
     ADConverter ADC(10.0,-10.0, numBits);
 
@@ -85,14 +85,7 @@ int main(){
     reverse = signalReverse(TxChirp);
 
     convRx = convolution(Rx, reverse);
-
-    noise = randomNoiseGenerator(60 _us, dt, 0, 1);
-
-    //RxT = signalAdd(noise, reverse, 20  _us, dt);
-
-    noise = randomNoiseGenerator(60 _us, dt, 0, 1);
    
-    
     zeroV = zerosGenerator(60 _us, dt);
     RxKaleen = signalAdd(zeroV, reverse, 20  _us, dt);
     //vectorPrinterInt(intTxChirp,dt);

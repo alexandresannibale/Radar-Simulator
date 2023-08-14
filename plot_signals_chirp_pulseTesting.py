@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import seaborn
 seaborn.set(style="darkgrid")
 
-x = np.loadtxt("convolutionSignal.txt")
+x = np.loadtxt("Vchirp.txt")
 Rx = np.loadtxt("Rx.txt")
 reverse = np.loadtxt("reverse.txt")
 plt.close("all")

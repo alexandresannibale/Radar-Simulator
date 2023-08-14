@@ -2,26 +2,34 @@
 #include <vector>
 #include <cmath>
 #include <iterator>
+#include <random>
 using namespace std;
+vector<double> randomNoiseGenerator(int n, double mu, double sigma);
 
 
 class DAConverter
 {
 public:
-double maxV;
-double minV;
-double scaler;
+double maxV =10;
+double minV =-10;
+double sigmaV = 100e-6;
+double scaler = (pow(2,8)-1)/maxV;
+
 public:
-    DAConverter(double max, double min, int numBits)
+    DAConverter(double max, double min, int numBits, double sigma)
     {
         maxV = max;
         minV = min;
+        sigmaV = sigma;
         scaler = (pow(2,numBits)-1)/max; //most significant bit used for the sign
     }
     
     double converter(int digital)
     {
-        double conversion = digital/scaler;
+        default_random_engine generator;
+
+        normal_distribution<double> distribution(0,sigmaV);
+        double conversion = digital/scaler + distribution(generator);
         return conversion;       
     }
 
@@ -30,10 +38,12 @@ public:
        vector<double> convertedAnalogVector;
        int n = TxChirp.size();
        convertedAnalogVector.reserve(n);
-       
+       vector<double> noise = randomNoiseGenerator(n, 0, sigmaV);
+
        for (int i = 0; i < n; i++)     
         {   
-            int digital = TxChirp.at(i)/scaler;
+            double digital = TxChirp.at(i)/scaler + noise.at(i);
+             
             if (digital > maxV)
                 digital = maxV;
 
@@ -41,7 +51,8 @@ public:
                 digital = minV;
 
            convertedAnalogVector.push_back(digital);
-          
+       //    convertedAnalogVector.push_back(digital);
+
         }       
         return convertedAnalogVector;
     }
