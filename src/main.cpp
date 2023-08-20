@@ -90,24 +90,24 @@ int main(){
     RxKaleen = signalAdd(zeroV, reverse, 20  _us, dt);
     //vectorPrinterInt(intTxChirp,dt);
    // vectorPrinterDouble(Vchirp,dt);
-    saveVectorInt(intTxChirp, dt, "intTxChirp.txt");
-    saveVector(Vchirp, dt, "Vchirp.txt");
-    saveVector(Pchirp, dt, "Pchirp.txt");
-    saveVector(VRxChirp, dt, "VRxChirp.txt");
+    saveVectorInt(intTxChirp, dt, "output/intTxChirp.txt");
+    saveVector(Vchirp, dt, "output/Vchirp.txt");
+    saveVector(Pchirp, dt, "output/Pchirp.txt");
+    saveVector(VRxChirp, dt, "output/VRxChirp.txt");
 
 
-    saveVector(VRxA, dt, "VRxA.txt");
+    saveVector(VRxA, dt, "output/VRxA.txt");
 
-    saveVectorInt(VRxC, dt, "VRxC.txt");
+    saveVectorInt(VRxC, dt, "output/VRxC.txt");
 
-    saveVector(Rx, dt, "Rx.txt");
-    saveVector(VRx, dt, "VRx.txt");
+    saveVector(Rx, dt, "output/Rx.txt");
+    saveVector(VRx, dt, "output/VRx.txt");
 
-    saveVector(reverse, dt, "reverse.txt");
-    saveVector(Rx, dt, "Rx.txt");
-    saveVector(RxKaleen, dt, "RxKaleen.txt");
-    saveVector(TxChirp, dt, "TxChirp.txt");
+    saveVector(reverse, dt, "output/reverse.txt");
+    saveVector(Rx, dt, "output/Rx.txt");
+    saveVector(RxKaleen, dt, "output/RxKaleen.txt");
+    saveVector(TxChirp, dt, "output/TxChirp.txt");
 
-    saveVector(convRx, dt, "convolutionSignal.txt");
-    saveVector(noise, dt, "randomNoise.txt");
+    saveVector(convRx, dt, "output/convolutionSignal.txt");
+    saveVector(noise, dt, "output/randomNoise.txt");
 }
