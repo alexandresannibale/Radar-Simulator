@@ -4,7 +4,7 @@
 #include <vector>
 #include <random>
 #include <string>
-#include "signalFunctions.cpp"
+#include "simLib/signalFunctions.h"
 #include "DAConverter.cpp"
 #include "VPConverter.cpp"
 #include "radarPropagation.cpp"

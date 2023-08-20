@@ -4,6 +4,7 @@
 #include <vector>
 #include <random>
 #include <string>
+#include "signalFunctions.h"
 
 #define _us *1e-6
 #define _MHz *1e6
