@@ -4,7 +4,8 @@
 #include <iterator>
 #include <random>
 using namespace std;
-vector<double> randomNoiseGenerator(int n, double mu, double sigma);
+
+vector<double> randomNoiseGenerator(int , double , double );
 
 
 class DAConverter
@@ -12,7 +13,7 @@ class DAConverter
 public:
 double maxV =10;
 double minV =-10;
-double sigmaV = 100e-6;
+double sigmaV = 0;
 double scaler = (pow(2,8)-1)/maxV;
 
 public:

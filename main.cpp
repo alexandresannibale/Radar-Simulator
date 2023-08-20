@@ -13,7 +13,7 @@
 #include "LNA.cpp"
 
 int main(){
-    //noise vector    vector<double> Tx;
+    double sigmaV = 100e-6;
 
     vector<double> noise;
     //pulse signal reversed
@@ -27,15 +27,15 @@ int main(){
     //number of bit for scaling
     int numBits=8;
     double Gt = 1000;
-    DAConverter DAC(10.0, -10.0, numBits, 0);
+    DAConverter DAC(10.0, -10.0, numBits, 1);
 
-    ADConverter ADC(10.0,-10.0, numBits);
+    ADConverter ADC(10.0,-10.0, numBits, 1);
 
-    LNA PA1(1000.0, -1000.0, 100);
+    LNA PA1(1000.0, -1000.0, 100, 1);
 
-    LNA LNA1(10.0, -10.0, 100);
+    LNA LNA1(10.0, -10.0, 100, 1);
 
-    LNA LNA2(10.0, -10.0, 1000);
+    LNA LNA2(10.0, -10.0, 1000, 1);
 
     radar_Propagation propagator;
 
@@ -52,7 +52,7 @@ int main(){
     Vchirp = PA1.amplifyVector(Vchirp);
 
 
-    vector <double> Pchirp = gainVPConverter(Vchirp, 50, 100);
+    vector <double> Pchirp = gainVPConverter(Vchirp, 50, 100, 1);
 
     double PTx = findMaxValue(Pchirp);
   
