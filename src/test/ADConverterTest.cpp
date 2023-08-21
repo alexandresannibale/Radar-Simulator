@@ -2,7 +2,7 @@
 #include <vector>
 #include <cmath>
 #include <iterator>
-#include "ADConverter.cpp"
+#include "../ADConverter.cpp"
 
 using namespace std;
 
@@ -19,7 +19,7 @@ void vectorPrint(vector<int> &vp)
 int main()
 {
     vector<double> v{1,2,300};
-    ADConverter Signal1(10.0, -10.0, 8);
+    ADConverter Signal1(10.0, -10.0, 8, 4);
     //cout << Signal1.converter(5.3); 
     vector <int> b = Signal1.convertVector(v);
     vectorPrint(b);

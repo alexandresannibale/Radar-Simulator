@@ -1,3 +1,6 @@
+#ifndef _SIMLIB_SIGNALFUNCTIONS
+#define _SIMLIB_SIGNALFUNCTIONS 1
+
 #include <iostream>
 #include <fstream>
 #include <cmath>
@@ -42,3 +45,5 @@ void vectorPrinterInt(vector<int> &vp, double dt);
 void saveVector(vector<double> &vp, double dt, string data_path);
 
 void saveVectorInt(vector<int> &vp, double dt, string data_path);
+
+#endif

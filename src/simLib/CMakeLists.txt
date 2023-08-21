@@ -1,1 +1,1 @@
-add_library(simLib signalFunctions.cpp)
+add_library(simLib signalFunctions.cpp DAConverter.cpp)

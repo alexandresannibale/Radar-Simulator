@@ -2,8 +2,8 @@
 #include <vector>
 #include <cmath>
 #include <iterator>
-#include "DAConverter.cpp"
-#include "signalFunctions.cpp"
+#include "../simLib/DAConverter.h"
+#include "../simLib/signalFunctions.h"
 using namespace std;
 
 
